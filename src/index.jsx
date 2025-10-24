@@ -126,15 +126,5 @@ window.addEventListener("beforeunload", () => {
 		store.dispatch.savedata.setMusicSecond(second);
 });
 
-// Show overlay if window is too small
-const MIN_W = 650;
-const MIN_H = 350;
-const overlay = document.getElementById("too-small-overlay");
-function updateTooSmallOverlay() {
-	if (!overlay) return;
-	const tooSmall = innerWidth < MIN_W || innerHeight < MIN_H;
-	overlay.style.display = tooSmall ? "flex" : "none";
-}
-addEventListener("resize", updateTooSmallOverlay, { passive: true });
-addEventListener("orientationchange", updateTooSmallOverlay, { passive: true });
-updateTooSmallOverlay();
+// Mobile-friendly: No minimum size restrictions
+// Removed desktop-only overlay to support mobile devices

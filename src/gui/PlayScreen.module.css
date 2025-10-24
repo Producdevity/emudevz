@@ -2,6 +2,19 @@
 	height: calc(100% - 48px); /* (tied to NavBar.module.css) */
 }
 
+/* Mobile container adjustments */
+@media (max-width: 767.98px) {
+	.container {
+		height: calc(100% - 56px);
+	}
+}
+
+@media (max-width: 479.98px) {
+	.container {
+		height: calc(100% - 60px);
+	}
+}
+
 .message {
 	position: absolute;
 	left: 50%;

@@ -1,5 +1,6 @@
 .icon {
 	cursor: pointer;
+	touch-action: manipulation;
 }
 
 .inline {
@@ -30,8 +31,51 @@
 	padding: 16px 20px 18px 20px;
 	box-shadow: inset 8px 8px 8px rgba(0, 0, 0, 0.075),
 		0 0 8px rgba(200, 200, 200, 0.6);
+	touch-action: manipulation;
 }
 
 .rounded:hover {
 	background: #9bc0e9;
+}
+
+/* Mobile icon button optimizations */
+@media (max-width: 767.98px) {
+	.icon {
+		min-width: 44px;
+		min-height: 44px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 8px;
+	}
+
+	.rounded {
+		padding: 20px 24px 22px 24px;
+		min-width: 48px;
+		min-height: 48px;
+	}
+
+	.inline {
+		margin-right: 12px;
+		margin-bottom: 4px;
+	}
+}
+
+@media (max-width: 479.98px) {
+	.icon {
+		min-width: 40px;
+		min-height: 40px;
+		padding: 6px;
+	}
+
+	.rounded {
+		padding: 16px 20px 18px 20px;
+		min-width: 44px;
+		min-height: 44px;
+	}
+
+	.inline {
+		margin-right: 8px;
+		margin-bottom: 2px;
+	}
 }

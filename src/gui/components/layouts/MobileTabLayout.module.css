@@ -1,0 +1,158 @@
+.mobileTabLayout {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	width: 100%;
+}
+
+.tabContent {
+	flex: 1;
+	position: relative;
+	overflow: hidden;
+}
+
+.tabPanel {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	transform: translateX(100%);
+	transition: all 0.3s ease-in-out;
+	pointer-events: none;
+}
+
+.tabPanel.active {
+	opacity: 1;
+	transform: translateX(0);
+	pointer-events: auto;
+}
+
+.tabBar {
+	display: flex;
+	background: rgba(0, 0, 0, 0.9);
+	border-top: 1px solid #333;
+	padding: 8px 0;
+	min-height: 60px;
+	backdrop-filter: blur(10px);
+}
+
+.tabButton {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background: transparent;
+	border: none;
+	color: #ccc;
+	padding: 8px 4px;
+	min-height: 44px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	touch-action: manipulation;
+}
+
+.tabButton:hover {
+	background: rgba(255, 255, 255, 0.1);
+	color: #fff;
+}
+
+.tabButton.active {
+	color: #fff;
+	background: rgba(100, 41, 176, 0.3);
+}
+
+.tabIcon {
+	font-size: 20px;
+	margin-bottom: 4px;
+}
+
+.tabLabel {
+	font-size: 11px;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+/* Small phones */
+@media (max-width: 479.98px) {
+	.tabBar {
+		min-height: 56px;
+		padding: 6px 0;
+	}
+
+	.tabButton {
+		padding: 6px 2px;
+		min-height: 40px;
+	}
+
+	.tabIcon {
+		font-size: 18px;
+		margin-bottom: 2px;
+	}
+
+	.tabLabel {
+		font-size: 10px;
+	}
+}
+
+/* Large phones */
+@media (min-width: 480px) and (max-width: 767.98px) {
+	.tabBar {
+		min-height: 64px;
+		padding: 10px 0;
+	}
+
+	.tabButton {
+		padding: 10px 8px;
+		min-height: 48px;
+	}
+
+	.tabIcon {
+		font-size: 22px;
+		margin-bottom: 6px;
+	}
+
+	.tabLabel {
+		font-size: 12px;
+	}
+}
+
+/* Landscape mobile */
+@media (max-width: 767.98px) and (orientation: landscape) {
+	.mobileTabLayout {
+		flex-direction: row;
+	}
+
+	.tabContent {
+		flex: 1;
+	}
+
+	.tabBar {
+		flex-direction: column;
+		width: 80px;
+		min-width: 80px;
+		border-top: none;
+		border-left: 1px solid #333;
+		padding: 0;
+	}
+
+	.tabButton {
+		flex-direction: row;
+		justify-content: flex-start;
+		padding: 12px 8px;
+		min-height: 60px;
+	}
+
+	.tabIcon {
+		margin-bottom: 0;
+		margin-right: 8px;
+	}
+
+	.tabLabel {
+		font-size: 11px;
+		text-align: left;
+	}
+}

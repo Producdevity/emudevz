@@ -16,6 +16,22 @@
 	font-size: small;
 }
 
+/* Mobile navbar adjustments */
+@media (max-width: 767.98px) {
+	.navbar {
+		height: 56px; /* Larger touch target for mobile */
+		font-size: 14px;
+	}
+}
+
+@media (max-width: 479.98px) {
+	.navbar {
+		height: 60px; /* Even larger for small phones */
+		font-size: 12px;
+		padding: 0 8px;
+	}
+}
+
 .item {
 	display: flex;
 	margin: 4px 8px 4px 8px;

@@ -3,6 +3,7 @@ import _ from "lodash";
 import codeEval from "../level/codeEval";
 import components from "./components";
 import layouts from "./components/layouts";
+import MobileLayoutDetector from "./components/layouts/MobileLayoutDetector";
 import NavBar from "./components/widgets/NavBar";
 import music from "./sound/music";
 
@@ -21,7 +22,12 @@ class LevelScreen extends PureComponent {
 
 		return (
 			<>
-				<Layout {...Components} ref={this.onReady} resizable={isFreeMode} />
+				<MobileLayoutDetector
+					layout={level.ui.layout}
+					{...Components}
+					ref={this.onReady}
+					resizable={isFreeMode}
+				/>
 				<NavBar chapter={chapter} level={level} />
 			</>
 		);

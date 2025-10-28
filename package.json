@@ -30,6 +30,7 @@
     "bootstrap": "^5.3.2",
     "browserfs": "^1.4.3",
     "classnames": "^2.3.2",
+    "cli-highlight": "^2.1.11",
     "lodash": "^4.17.21",
     "pixi.js": "^7.4.2",
     "@pixi/layers": "^2.1.0",

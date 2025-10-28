@@ -41,7 +41,7 @@ export default defineConfig(({ mode }) => {
 				},
 			},
 			// Optimize for mobile
-			chunkSizeWarningLimit: 500, // Warn about chunks larger than 500KB
+			chunkSizeWarningLimit: 1000, // Warn about chunks larger than 1000KB
 			assetsInlineLimit: 4096, // Inline assets smaller than 4KB
 		},
 		define: {

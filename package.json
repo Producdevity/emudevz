@@ -19,6 +19,7 @@
     "sort-dictionary": "node scripts/sort-dictionary.js"
   },
   "dependencies": {
+    "@codemirror/lang-javascript": "^6.2.4",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.19",

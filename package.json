@@ -47,6 +47,7 @@
     "highlight.js": "^11.9.0",
     "javascript-time-ago": "^2.5.9",
     "jszip": "^3.10.1",
+    "path-browserify-esm": "^1.0.0",
     "xterm": "~5.2.0",
     "yaml": "^2.3.4",
     "xterm-addon-fit": "^0.8.0",

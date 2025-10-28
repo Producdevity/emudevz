@@ -43,6 +43,7 @@
     "react-redux": "^7.2.9",
     "react-router-dom": "^5.3.4",
     "connected-react-router": "^6.9.3",
+    "escape-string-regexp": "^5.0.0",
     "highlight.js": "^11.9.0",
     "javascript-time-ago": "^2.5.9",
     "jszip": "^3.10.1",

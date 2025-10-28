@@ -28,3 +28,4 @@ yarn-error.log*
 *.AppImage
 public/levels
 *.mp3
+.vercel

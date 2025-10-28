@@ -1,45 +1,9 @@
 {
 	"version": 2,
-	"name": "emudevz-mobile",
-	"builds": [
-		{
-			"src": "package.json",
-			"use": "@vercel/static-build",
-			"config": {
-				"distDir": "build"
-			}
-		}
-	],
-	"routes": [
-		{
-			"src": "/assets/(.*)",
-			"headers": {
-				"Cache-Control": "public, max-age=31536000, immutable"
-			}
-		},
-		{
-			"src": "/fonts/(.*)",
-			"headers": {
-				"Cache-Control": "public, max-age=31536000, immutable"
-			}
-		},
-		{
-			"src": "/levels/(.*)",
-			"headers": {
-				"Cache-Control": "public, max-age=86400"
-			}
-		},
-		{
-			"src": "/sw.js",
-			"headers": {
-				"Cache-Control": "public, max-age=0, must-revalidate"
-			}
-		},
-		{
-			"src": "/(.*)",
-			"dest": "/index.html"
-		}
-	],
+	"buildCommand": "npm run build",
+	"outputDirectory": "build",
+	"installCommand": "npm install --legacy-peer-deps",
+
 	"headers": [
 		{
 			"source": "/(.*)",
@@ -63,7 +27,7 @@
 			]
 		},
 		{
-			"source": "/(.*\\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2))",
+			"source": "/static/(.*)",
 			"headers": [
 				{
 					"key": "Cache-Control",
@@ -75,7 +39,7 @@
 	"env": {
 		"NODE_ENV": "production"
 	},
-	"functions": {},
+
 	"rewrites": [
 		{
 			"source": "/api/(.*)",

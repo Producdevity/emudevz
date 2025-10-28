@@ -42,6 +42,7 @@
     "react-router-dom": "^5.3.4",
     "connected-react-router": "^6.9.3",
     "highlight.js": "^11.9.0",
+    "javascript-time-ago": "^2.5.9",
     "jszip": "^3.10.1",
     "xterm": "~5.2.0",
     "yaml": "^2.3.4",

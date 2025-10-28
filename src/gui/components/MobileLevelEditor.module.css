@@ -1,0 +1,446 @@
+.mobileLevelEditor {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: #1a1a1a;
+	color: white;
+	z-index: 2000;
+	display: flex;
+	flex-direction: column;
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px 15px;
+	background: #2a2a2a;
+	border-bottom: 1px solid #444;
+}
+
+.backButton {
+	background: none;
+	border: none;
+	color: white;
+	font-size: 16px;
+	padding: 8px 12px;
+	cursor: pointer;
+	border-radius: 5px;
+	transition: background 0.2s;
+}
+
+.backButton:hover {
+	background: #3a3a3a;
+}
+
+.modeSelector {
+	display: flex;
+	gap: 5px;
+	background: #1a1a1a;
+	border-radius: 20px;
+	padding: 3px;
+}
+
+.modeButton {
+	background: none;
+	border: none;
+	color: #888;
+	padding: 8px 16px;
+	border-radius: 17px;
+	cursor: pointer;
+	font-size: 14px;
+	transition: all 0.3s;
+}
+
+.modeButton.active {
+	background: #667eea;
+	color: white;
+}
+
+.unsavedIndicator {
+	color: #ff4444;
+	font-size: 20px;
+	animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.5;
+	}
+}
+
+.toolbar {
+	background: #2a2a2a;
+	padding: 10px;
+	border-bottom: 1px solid #444;
+}
+
+.toolPalette {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 10px;
+	margin-bottom: 10px;
+}
+
+.toolButton {
+	background: #3a3a3a;
+	border: none;
+	color: white;
+	padding: 12px 8px;
+	border-radius: 8px;
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 4px;
+	transition: all 0.2s;
+}
+
+.toolButton:hover {
+	background: #4a4a4a;
+	transform: translateY(-2px);
+}
+
+.toolButton.active {
+	background: #667eea;
+	color: white;
+}
+
+.toolIcon {
+	font-size: 20px;
+}
+
+.toolName {
+	font-size: 11px;
+	opacity: 0.8;
+}
+
+.actions {
+	display: flex;
+	gap: 10px;
+	justify-content: center;
+}
+
+.actionButton {
+	background: #3a3a3a;
+	border: none;
+	color: white;
+	padding: 8px 16px;
+	border-radius: 6px;
+	cursor: pointer;
+	font-size: 14px;
+	transition: all 0.2s;
+}
+
+.actionButton:hover:not(:disabled) {
+	background: #4a4a4a;
+}
+
+.actionButton:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.canvasContainer {
+	flex: 1;
+	position: relative;
+	overflow: hidden;
+	background: #0a0a0a;
+}
+
+.canvas {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	transform-origin: 0 0;
+	transition: transform 0.1s;
+}
+
+.grid {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-image: linear-gradient(
+			rgba(255, 255, 255, 0.1) 1px,
+			transparent 1px
+		),
+		linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+	background-size: 16px 16px;
+}
+
+.element {
+	position: absolute;
+	border: 2px solid transparent;
+	transition: all 0.2s;
+}
+
+.element.selected {
+	border-color: #667eea;
+	box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+}
+
+.element.rectangle {
+	background: #667eea;
+	border-radius: 4px;
+}
+
+.element.circle {
+	background: #764ba2;
+	border-radius: 50%;
+}
+
+.element.text {
+	background: none;
+	color: white;
+	font-size: 16px;
+	line-height: 1;
+}
+
+.element.sprite img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
+
+.zoomControls {
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+	background: rgba(0, 0, 0, 0.8);
+	border-radius: 25px;
+	padding: 8px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	backdrop-filter: blur(10px);
+}
+
+.zoomControls button {
+	background: #667eea;
+	border: none;
+	color: white;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	cursor: pointer;
+	font-size: 18px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.zoomControls span {
+	font-size: 12px;
+	min-width: 40px;
+	text-align: center;
+}
+
+.codeEditor {
+	flex: 1;
+	padding: 15px;
+	background: #1a1a1a;
+}
+
+.codeTextarea {
+	width: 100%;
+	height: 100%;
+	background: #0a0a0a;
+	color: #00ff00;
+	border: 1px solid #444;
+	border-radius: 8px;
+	padding: 15px;
+	font-family: "Courier New", monospace;
+	font-size: 14px;
+	resize: none;
+	outline: none;
+}
+
+.preview {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #1a1a1a;
+}
+
+.previewMode {
+	text-align: center;
+}
+
+.previewMode p {
+	margin-bottom: 20px;
+	opacity: 0.8;
+}
+
+.previewMode button {
+	background: #667eea;
+	border: none;
+	color: white;
+	padding: 12px 24px;
+	border-radius: 8px;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.testMode {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.testHeader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 15px;
+	background: #2a2a2a;
+}
+
+.testHeader button {
+	background: #f44336;
+	border: none;
+	color: white;
+	padding: 8px 16px;
+	border-radius: 6px;
+	cursor: pointer;
+}
+
+.gamePreview {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #0a0a0a;
+}
+
+.footer {
+	padding: 15px;
+	background: #2a2a2a;
+	border-top: 1px solid #444;
+}
+
+.saveButton {
+	width: 100%;
+	background: #4caf50;
+	border: none;
+	color: white;
+	padding: 15px;
+	border-radius: 8px;
+	font-size: 16px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: all 0.2s;
+}
+
+.saveButton:hover {
+	background: #45a049;
+	transform: translateY(-2px);
+}
+
+.saveButton:active {
+	transform: translateY(0);
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 768px) {
+	.header {
+		padding: 8px 12px;
+	}
+
+	.backButton {
+		font-size: 14px;
+		padding: 6px 10px;
+	}
+
+	.modeButton {
+		padding: 6px 12px;
+		font-size: 13px;
+	}
+
+	.toolPalette {
+		grid-template-columns: repeat(3, 1fr);
+		gap: 8px;
+	}
+
+	.toolButton {
+		padding: 10px 6px;
+	}
+
+	.toolIcon {
+		font-size: 18px;
+	}
+
+	.toolName {
+		font-size: 10px;
+	}
+
+	.zoomControls {
+		bottom: 15px;
+		right: 15px;
+		padding: 6px;
+	}
+
+	.zoomControls button {
+		width: 28px;
+		height: 28px;
+		font-size: 16px;
+	}
+}
+
+/* Landscape mode adjustments */
+@media (max-height: 500px) and (orientation: landscape) {
+	.header {
+		padding: 5px 10px;
+	}
+
+	.toolbar {
+		padding: 8px;
+	}
+
+	.toolPalette {
+		grid-template-columns: repeat(6, 1fr);
+		gap: 5px;
+	}
+
+	.toolButton {
+		padding: 8px 4px;
+		flex-direction: row;
+		gap: 2px;
+	}
+
+	.toolName {
+		font-size: 9px;
+	}
+
+	.zoomControls {
+		bottom: 10px;
+		right: 10px;
+	}
+}
+
+/* Touch-friendly sizing */
+@media (pointer: coarse) {
+	.toolButton {
+		min-height: 60px;
+	}
+
+	.actionButton {
+		min-height: 44px;
+		padding: 10px 20px;
+	}
+
+	.saveButton {
+		min-height: 50px;
+	}
+}

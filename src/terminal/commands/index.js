@@ -4,6 +4,7 @@ import HelpCommand from "./HelpCommand";
 import ReplCommand from "./ReplCommand";
 import RootCommand from "./RootCommand";
 import fsCommands from "./fs";
+import MobileTestCommand from "./mobileTest";
 import TestCommand from "./test/TestCommand";
 
 export default [
@@ -12,6 +13,7 @@ export default [
 	HelpCommand,
 	ReplCommand,
 	TestCommand,
+	MobileTestCommand,
 	...fsCommands,
 	RootCommand,
 ];

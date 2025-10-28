@@ -9,8 +9,15 @@ import PlayScreen from "./gui/PlayScreen";
 import music from "./gui/sound/music";
 import store, { history } from "./store";
 import { bus } from "./utils";
+import browserOptimizer from "./utils/browserOptimization";
+import crashReporter from "./utils/cashReporting";
+import cloudSaveManager from "./utils/cloudSave";
+import { initMobileOptimizations } from "./utils/mobile";
+import initMobileAnalytics, { trackMobileEvent } from "./utils/mobileAnalytics";
+import mobileGestureHandler from "./utils/mobileGestures";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./gui/theme/crt.css";
+import "./gui/theme/mobile-keyboard.css";
 import "./gui/theme/theme.css";
 import "highlight.js/styles/base16/onedark.css";
 import "xterm/css/xterm.css";
@@ -125,6 +132,64 @@ window.addEventListener("beforeunload", () => {
 	if (isFinite(second) && second >= 0)
 		store.dispatch.savedata.setMusicSecond(second);
 });
+
+// Initialize mobile optimizations
+initMobileOptimizations();
+
+// Initialize mobile analytics
+const mobileAnalytics = initMobileAnalytics();
+
+// Initialize browser optimizations
+browserOptimizer.optimizeMediaLoading();
+
+// Initialize cloud save (if supported)
+if (cloudSaveManager.isSupported) {
+	console.log("Cloud save initialized");
+}
+
+// Track page load
+window.addEventListener("load", () => {
+	trackMobileEvent("page_load", {
+		loadTime: performance.now(),
+	});
+});
+
+// Track app close
+window.addEventListener("beforeunload", () => {
+	if (mobileAnalytics) {
+		mobileAnalytics.endSession();
+	}
+});
+
+// Register service worker for PWA functionality
+if ("serviceWorker" in navigator) {
+	window.addEventListener("load", () => {
+		navigator.serviceWorker
+			.register("/sw.js")
+			.then((registration) => {
+				console.log("SW registered: ", registration);
+
+				// Check for updates
+				registration.addEventListener("updatefound", () => {
+					const newWorker = registration.installing;
+					newWorker.addEventListener("statechange", () => {
+						if (
+							newWorker.state === "installed" &&
+							navigator.serviceWorker.controller
+						) {
+							// Show update notification
+							if (window.confirm("New version available! Reload to update?")) {
+								window.location.reload();
+							}
+						}
+					});
+				});
+			})
+			.catch((registrationError) => {
+				console.log("SW registration failed: ", registrationError);
+			});
+	});
+}
 
 // Mobile-friendly: No minimum size restrictions
 // Removed desktop-only overlay to support mobile devices

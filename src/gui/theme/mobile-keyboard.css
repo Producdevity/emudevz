@@ -1,0 +1,130 @@
+/* Mobile virtual keyboard optimizations */
+
+/* When virtual keyboard is open */
+.virtual-keyboard-open .mobileTabLayout {
+	transition: height 0.2s ease-out;
+}
+
+.virtual-keyboard-open .tabBar {
+	/* Ensure tab bar stays accessible */
+	position: sticky;
+	bottom: 0;
+	z-index: 100;
+}
+
+/* Input field optimizations for mobile */
+.mobile-device input,
+.mobile-device textarea,
+.mobile-device select {
+	/* Prevent zoom on iOS */
+	font-size: 16px !important;
+
+	/* Better touch targets */
+	min-height: 44px;
+	padding: 12px;
+
+	/* Remove default styling */
+	border-radius: 8px;
+	border: 1px solid var(--border);
+	background: var(--background);
+	color: var(--text);
+}
+
+/* Terminal optimizations for mobile */
+.mobile-device .xterm {
+	/* Better touch scrolling */
+	-webkit-overflow-scrolling: touch;
+
+	/* Prevent text selection during touch */
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.mobile-device .xterm-viewport {
+	/* Smooth scrolling */
+	scroll-behavior: smooth;
+}
+
+/* Code editor mobile optimizations */
+.mobile-device .CodeMirror {
+	/* Larger touch targets for gutter */
+	.CodeMirror-gutters {
+		min-width: 50px;
+	}
+
+	/* Larger line numbers */
+	.CodeMirror-linenumber {
+		font-size: 14px;
+		min-height: 20px;
+		padding: 0 8px;
+	}
+
+	/* Better cursor visibility */
+	.CodeMirror-cursor {
+		border-left-width: 2px;
+	}
+}
+
+/* Emulator mobile optimizations */
+.mobile-device canvas {
+	/* Prevent accidental zoom */
+	touch-action: none;
+
+	/* Better performance */
+	image-rendering: pixelated;
+	image-rendering: -moz-crisp-edges;
+	image-rendering: crisp-edges;
+}
+
+/* Mobile-specific button sizing */
+.mobile-device button,
+.mobile-device .btn {
+	/* iOS touch target minimum */
+	min-height: 44px;
+	min-width: 44px;
+
+	/* Prevent text selection */
+	-webkit-user-select: none;
+	user-select: none;
+
+	/* Better touch feedback */
+	touch-action: manipulation;
+}
+
+/* Modal optimizations for mobile */
+.mobile-device .modal {
+	/* Handle keyboard */
+	max-height: 90vh;
+	overflow-y: auto;
+
+	/* Better positioning */
+	top: 5vh;
+	bottom: auto;
+}
+
+/* Landscape keyboard optimizations */
+@media (max-width: 767.98px) and (orientation: landscape) {
+	.virtual-keyboard-open .mobileTabLayout {
+		/* Reduce height in landscape with keyboard */
+		height: 60vh !important;
+	}
+
+	.virtual-keyboard-open .tabContent {
+		/* Adjust content area */
+		height: calc(60vh - 60px);
+	}
+}
+
+/* Small screen optimizations */
+@media (max-width: 479.98px) {
+	.mobile-device .CodeMirror-gutters {
+		min-width: 40px;
+	}
+
+	.mobile-device .CodeMirror-linenumber {
+		font-size: 12px;
+		padding: 0 4px;
+	}
+}

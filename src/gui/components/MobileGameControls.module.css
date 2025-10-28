@@ -1,0 +1,189 @@
+.mobileControls {
+	position: fixed;
+	bottom: 80px; /* Above tab bar */
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 1000;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+	padding: 20px;
+	background: rgba(0, 0, 0, 0.8);
+	border-radius: 16px;
+	backdrop-filter: blur(10px);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dpad {
+	position: relative;
+	width: 120px;
+	height: 120px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.dpadButton {
+	position: absolute;
+	background: rgba(255, 255, 255, 0.1);
+	border: 2px solid rgba(255, 255, 255, 0.3);
+	border-radius: 8px;
+	color: #fff;
+	font-size: 18px;
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	touch-action: manipulation;
+	transition: all 0.1s ease;
+	min-width: 40px;
+	min-height: 40px;
+}
+
+.dpadButton.active {
+	background: rgba(100, 41, 176, 0.5);
+	border-color: #6429b0;
+	transform: scale(0.95);
+}
+
+.dpadUp {
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.dpadDown {
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.dpadLeft {
+	left: 0;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.dpadRight {
+	right: 0;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.dpadCenter {
+	width: 40px;
+	height: 40px;
+	background: rgba(255, 255, 255, 0.05);
+	border-radius: 50%;
+}
+
+.actionButtons {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr 1fr;
+	gap: 10px;
+	width: 140px;
+}
+
+.actionButton {
+	background: rgba(255, 255, 255, 0.1);
+	border: 2px solid rgba(255, 255, 255, 0.3);
+	border-radius: 50%;
+	color: #fff;
+	font-size: 14px;
+	font-weight: bold;
+	width: 60px;
+	height: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	touch-action: manipulation;
+	transition: all 0.1s ease;
+}
+
+.actionButton.active {
+	background: rgba(220, 53, 69, 0.5);
+	border-color: #dc3545;
+	transform: scale(0.95);
+}
+
+.controlsSettings {
+	position: absolute;
+	top: -10px;
+	right: -10px;
+}
+
+.settingButton {
+	background: rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	border-radius: 50%;
+	width: 30px;
+	height: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 12px;
+	touch-action: manipulation;
+	transition: all 0.2s ease;
+}
+
+.settingButton.active {
+	background: rgba(76, 175, 80, 0.5);
+	border-color: #4caf50;
+}
+
+/* Landscape adjustments */
+@media (max-width: 767.98px) and (orientation: landscape) {
+	.mobileControls {
+		bottom: 20px;
+		flex-direction: row;
+		gap: 30px;
+		padding: 15px;
+	}
+
+	.dpad {
+		width: 100px;
+		height: 100px;
+	}
+
+	.dpadButton {
+		width: 30px;
+		height: 30px;
+		font-size: 14px;
+	}
+
+	.actionButtons {
+		width: 120px;
+		gap: 8px;
+	}
+
+	.actionButton {
+		width: 50px;
+		height: 50px;
+		font-size: 12px;
+	}
+}
+
+/* Small screen adjustments */
+@media (max-width: 479.98px) {
+	.mobileControls {
+		bottom: 70px;
+		padding: 15px;
+		gap: 15px;
+	}
+
+	.dpad {
+		width: 100px;
+		height: 100px;
+	}
+
+	.actionButtons {
+		width: 110px;
+	}
+}
+
+/* Hide when keyboard is open */
+.virtual-keyboard-open .mobileControls {
+	display: none;
+}

@@ -22,6 +22,16 @@ export default class Speaker {
 			sharedAudioContext = new window.AudioContext({ sampleRate: SAMPLE_RATE });
 		this._audioCtx = sharedAudioContext;
 
+		// Handle mobile audio restrictions - resume context if suspended
+		if (this._audioCtx.state === "suspended") {
+			try {
+				await this._audioCtx.resume();
+			} catch (e) {
+				console.warn("Could not resume audio context:", e);
+				// Don't fail completely, just continue with suspended context
+			}
+		}
+
 		this.gainNode = this._audioCtx.createGain();
 		this.gainNode.gain.value = this.initialVolume;
 		this.gainNode.connect(this._audioCtx.destination);
@@ -53,6 +63,29 @@ export default class Speaker {
 	}
 
 	resume() {
+		if (this._audioCtx?.state === "suspended") {
+			// For mobile browsers, we need to resume from a user interaction
+			const resumeAudio = async () => {
+				try {
+					await this._audioCtx.resume();
+					console.log("Audio context resumed successfully");
+				} catch (e) {
+					console.warn("Failed to resume audio context:", e);
+				}
+			};
+
+			// Try to resume immediately
+			resumeAudio();
+
+			// Also set up a one-time click listener as fallback
+			const onClick = () => {
+				resumeAudio();
+				document.removeEventListener("click", onClick);
+				document.removeEventListener("touchstart", onClick);
+			};
+			document.addEventListener("click", onClick, { once: true });
+			document.addEventListener("touchstart", onClick, { once: true });
+		}
 		return this._audioCtx?.resume();
 	}
 

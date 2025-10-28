@@ -1,0 +1,97 @@
+.toast {
+	position: fixed;
+	top: 20px;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 10001;
+	min-width: 200px;
+	max-width: 90%;
+	background: var(--background);
+	border: 1px solid var(--border);
+	border-radius: 8px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+	animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+	from {
+		opacity: 0;
+		transform: translateX(-50%) translateY(-20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(-50%) translateY(0);
+	}
+}
+
+.content {
+	display: flex;
+	align-items: center;
+	padding: 12px 16px;
+	gap: 12px;
+}
+
+.icon {
+	font-size: 18px;
+	font-weight: bold;
+	flex-shrink: 0;
+	width: 20px;
+	text-align: center;
+}
+
+.message {
+	font-size: 14px;
+	line-height: 1.4;
+	color: var(--text);
+}
+
+/* Type-specific styles */
+.toast.info {
+	border-color: var(--primary);
+}
+
+.toast.info .icon {
+	color: var(--primary);
+}
+
+.toast.success {
+	border-color: #28a745;
+}
+
+.toast.success .icon {
+	color: #28a745;
+}
+
+.toast.error {
+	border-color: #dc3545;
+}
+
+.toast.error .icon {
+	color: #dc3545;
+}
+
+.toast.warning {
+	border-color: #ffc107;
+}
+
+.toast.warning .icon {
+	color: #ffc107;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+	.toast {
+		top: 10px;
+		min-width: 150px;
+		font-size: 16px; /* Prevents zoom on iOS */
+	}
+
+	.content {
+		padding: 14px 18px;
+		min-height: 44px; /* iOS touch target minimum */
+	}
+
+	.message {
+		font-size: 16px;
+	}
+}

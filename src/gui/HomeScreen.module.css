@@ -9,10 +9,30 @@
 	transform: translate(-50%, 0);
 	transform-origin: top center;
 	user-select: none;
-	display: none;
+	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	width: 90%;
+	max-width: 500px;
+}
+
+/* Mobile landscape adjustments */
+@media (max-width: 767.98px) and (orientation: landscape) {
+	.ui {
+		width: 70%;
+		max-width: 400px;
+	}
+
+	.buttons {
+		flex-wrap: wrap;
+		gap: 8px;
+	}
+
+	.button {
+		flex: 0 0 auto;
+		min-width: 120px;
+	}
 }
 
 .buttons {
@@ -38,4 +58,13 @@
 	text-align: justify;
 	box-shadow: inset 8px 8px 8px rgba(0, 0, 0, 0.075),
 		0 0 8px rgba(200, 200, 200, 0.6);
+}
+
+@media (max-width: 767.98px) and (orientation: landscape) {
+	.box {
+		font-size: 10px;
+		padding: 8px;
+		max-height: 60px;
+		overflow-y: auto;
+	}
 }

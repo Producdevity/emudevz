@@ -22,7 +22,35 @@ export default defineConfig(({ mode }) => {
 			minifyIdentifiers: false,
 		},
 		build: {
-			rollupOptions: { treeshake: false },
+			rollupOptions: {
+				treeshake: false,
+				external: [
+					"xterm-addon-image",
+					"imgui.umd.js",
+					"imgui_impl.umd.js",
+					"imgui_memory_editor.umd.js",
+				],
+				output: {
+					manualChunks: {
+						// Split vendor chunks for better caching
+						react: ["react", "react-dom"],
+						pixi: ["pixi.js", "@pixi/layers", "pixi-filters", "pixi-lights"],
+						terminal: ["xterm", "xterm-addon-fit"],
+						utils: ["lodash", "classnames"],
+					},
+				},
+			},
+			// Optimize for mobile
+			chunkSizeWarningLimit: 500, // Warn about chunks larger than 500KB
+			assetsInlineLimit: 4096, // Inline assets smaller than 4KB
+		},
+		define: {
+			"process.env.NODE_ENV": JSON.stringify(mode),
+			global: "globalThis",
+		},
+		optimizeDeps: {
+			// Pre-bundle dependencies for faster development
+			include: ["react", "react-dom", "lodash", "classnames"],
 		},
 	};
 });

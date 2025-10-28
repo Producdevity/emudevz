@@ -115,3 +115,47 @@
 	justify-content: center;
 	align-items: center;
 }
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+	.bar {
+		min-height: 50px; /* Larger touch targets */
+		padding: 8px;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.unitGroup {
+		margin-bottom: 4px;
+	}
+
+	.units {
+		font-size: 12px;
+	}
+
+	.controlButtons {
+		position: relative;
+		bottom: auto;
+		right: auto;
+		opacity: 1;
+		background: transparent;
+		padding: 8px;
+		margin-top: 8px;
+	}
+
+	.info {
+		position: relative;
+		bottom: auto;
+		left: auto;
+		opacity: 1;
+		background: transparent;
+		padding: 8px;
+		text-align: center;
+	}
+
+	.dragMessage {
+		font-size: 11px;
+		padding: 8px;
+		margin: 4px;
+	}
+}

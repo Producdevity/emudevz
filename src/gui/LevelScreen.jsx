@@ -2,6 +2,9 @@ import React, { PureComponent } from "react";
 import _ from "lodash";
 import codeEval from "../level/codeEval";
 import components from "./components";
+import MobileGameControls from "./components/MobileGameControls";
+import MobileOnboarding from "./components/MobileOnboarding";
+import MobileToast, { initMobileToast } from "./components/MobileToast";
 import layouts from "./components/layouts";
 import MobileLayoutDetector from "./components/layouts/MobileLayoutDetector";
 import NavBar from "./components/widgets/NavBar";
@@ -22,6 +25,10 @@ class LevelScreen extends PureComponent {
 
 		return (
 			<>
+				<MobileGameControls />
+				<MobileOnboarding />
+				<MobileToast ref={initMobileToast} />
+				{process.env.NODE_ENV === "development" && <MobileTestingHelper />}
 				<MobileLayoutDetector
 					layout={level.ui.layout}
 					{...Components}

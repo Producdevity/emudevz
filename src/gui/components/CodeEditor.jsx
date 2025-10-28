@@ -34,17 +34,45 @@ const ACTION_RUN = "run";
 const ACTION_SYNC_EMULATOR = "refreshEmulator";
 const NULL_ACTION = "none";
 const COMPILE_DEBOUNCE_MS = 500;
+const mobileExtensions = [
+	EditorView.theme({
+		"&": {
+			fontSize: "16px" /* Prevents zoom on iOS */,
+		},
+		".cm-content": {
+			padding: "12px",
+			lineHeight: "1.5",
+		},
+		".cm-gutter": {
+			minWidth: "40px",
+		},
+		".cm-line": {
+			minHeight: "1.5em",
+		},
+	}),
+];
+
 const LANGUAGES = {
-	javascript: (filePath = "", extraLangOptions = {}) => [
-		javascript(),
-		lintGutter(),
-		linter(esLint(new Linter(), esLintConfig(filePath, extraLangOptions)), {
-			delay: COMPILE_DEBOUNCE_MS,
-		}),
-		pasteIndent,
-	],
-	asm: () => [asm6502()],
-	plaintext: () => [],
+	javascript: (filePath = "", extraLangOptions = {}) => {
+		const isMobile = window.innerWidth <= 768;
+		return [
+			javascript(),
+			lintGutter(),
+			linter(esLint(new Linter(), esLintConfig(filePath, extraLangOptions)), {
+				delay: COMPILE_DEBOUNCE_MS,
+			}),
+			pasteIndent,
+			...(isMobile ? mobileExtensions : []),
+		];
+	},
+	asm: () => {
+		const isMobile = window.innerWidth <= 768;
+		return [asm6502(), ...(isMobile ? mobileExtensions : [])];
+	},
+	plaintext: () => {
+		const isMobile = window.innerWidth <= 768;
+		return isMobile ? mobileExtensions : [];
+	},
 };
 
 export default class CodeEditor extends PureComponent {

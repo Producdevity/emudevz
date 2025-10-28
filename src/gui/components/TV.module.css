@@ -3,3 +3,20 @@
 	height: 100%;
 	outline: none;
 }
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+	.tvContainer {
+		touch-action: manipulation; /* Improves touch responsiveness */
+		-webkit-touch-callout: none; /* Prevents callout on long press */
+		-webkit-user-select: none; /* Prevents text selection */
+		user-select: none;
+	}
+
+	/* Ensure emulator canvas is properly sized on mobile */
+	.tvContainer canvas {
+		max-width: 100%;
+		height: auto;
+		touch-action: none;
+	}
+}

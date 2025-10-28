@@ -1,0 +1,253 @@
+.mobileGameMode {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	color: white;
+	z-index: 1000;
+	padding: 10px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+	border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.modeInfo {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.modeIcon {
+	font-size: 24px;
+}
+
+.modeName {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.stats {
+	display: flex;
+	gap: 20px;
+	align-items: center;
+}
+
+.score,
+.timer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.label {
+	font-size: 10px;
+	opacity: 0.8;
+	text-transform: uppercase;
+}
+
+.value {
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.timer.warning .value {
+	color: #ffcc00;
+	animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.5;
+	}
+}
+
+.pauseButton {
+	background: rgba(255, 255, 255, 0.2);
+	border: none;
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 20px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.pauseButton:hover {
+	background: rgba(255, 255, 255, 0.3);
+	transform: scale(1.1);
+}
+
+.pauseButton:active {
+	transform: scale(0.95);
+}
+
+.currentChallenge {
+	background: rgba(255, 255, 255, 0.1);
+	border-radius: 10px;
+	padding: 12px;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-top: 10px;
+	backdrop-filter: blur(10px);
+}
+
+.challengeIcon {
+	font-size: 24px;
+}
+
+.challengeText {
+	flex: 1;
+}
+
+.challengeTitle {
+	font-size: 14px;
+	font-weight: bold;
+	margin-bottom: 4px;
+}
+
+.challengeProgress {
+	font-size: 12px;
+	opacity: 0.8;
+}
+
+.challengePoints {
+	font-size: 16px;
+	font-weight: bold;
+	color: #ffcc00;
+}
+
+.pauseOverlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.8);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 2000;
+}
+
+.pauseContent {
+	background: white;
+	color: #333;
+	border-radius: 15px;
+	padding: 30px;
+	text-align: center;
+	max-width: 300px;
+	width: 90%;
+}
+
+.pauseContent h2 {
+	margin-top: 0;
+	margin-bottom: 20px;
+	color: #667eea;
+}
+
+.resumeButton,
+.quitButton {
+	display: block;
+	width: 100%;
+	padding: 12px;
+	margin: 10px 0;
+	border: none;
+	border-radius: 8px;
+	font-size: 16px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.resumeButton {
+	background: #667eea;
+	color: white;
+}
+
+.resumeButton:hover {
+	background: #5a6fd8;
+	transform: translateY(-2px);
+}
+
+.quitButton {
+	background: #f44336;
+	color: white;
+}
+
+.quitButton:hover {
+	background: #da190b;
+	transform: translateY(-2px);
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 768px) {
+	.mobileGameMode {
+		padding: 8px;
+	}
+
+	.header {
+		flex-wrap: wrap;
+		gap: 10px;
+	}
+
+	.modeInfo {
+		order: 1;
+		flex: 1;
+	}
+
+	.stats {
+		order: 2;
+		gap: 15px;
+	}
+
+	.pauseButton {
+		order: 3;
+	}
+
+	.modeName {
+		font-size: 14px;
+	}
+
+	.value {
+		font-size: 16px;
+	}
+}
+
+/* Landscape mode adjustments */
+@media (max-height: 500px) and (orientation: landscape) {
+	.mobileGameMode {
+		padding: 5px;
+	}
+
+	.header {
+		margin-bottom: 5px;
+	}
+
+	.currentChallenge {
+		padding: 8px;
+		margin-top: 5px;
+	}
+
+	.challengeTitle {
+		font-size: 12px;
+	}
+
+	.challengeProgress {
+		font-size: 10px;
+	}
+}

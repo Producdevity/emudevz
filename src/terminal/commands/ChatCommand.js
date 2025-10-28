@@ -46,6 +46,7 @@ export default class ChatCommand extends Command {
 		}
 
 		this._onOpen();
+		bus.emit("chat-started", { level });
 
 		while (memory.sectionName !== ChatScript.END_SECTION) {
 			const sectionName = memory.sectionName;
@@ -89,12 +90,14 @@ export default class ChatCommand extends Command {
 
 		if (memory.winOnEnd) {
 			this._onClose();
+			bus.emit("chat-ended");
 			level.advance("chat");
 			return;
 		}
 
 		this._goTo(ChatScript.INITIAL_SECTION);
 		this._onClose();
+		bus.emit("chat-ended");
 	}
 
 	onStop() {

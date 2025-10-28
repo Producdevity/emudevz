@@ -178,12 +178,20 @@ class Music {
 		return isFinite(value) && value >= 0 ? value : 0;
 	}
 
-	_playCurrentTrack(startSecond = 0) {
+	async _playCurrentTrack(startSecond = 0) {
 		if (this._audio) this._audio.pause();
 
 		this._saveTrackInfo();
-		this._audio = new Audio(MUSIC_DIR + TRACKS[this._track].file);
+		const audioFile = MUSIC_DIR + TRACKS[this._track].file;
+		this._audio = new Audio(audioFile);
 		this._audio.volume = this._volume;
+
+		// Handle audio loading errors
+		this._audio.addEventListener("error", (e) => {
+			console.warn(`Audio file not found or failed to load: ${audioFile}`);
+			// Skip to next track after a short delay
+			setTimeout(() => this.next(), 1000);
+		});
 
 		if (startSecond > 0) {
 			this._audio.addEventListener(
@@ -195,7 +203,35 @@ class Music {
 			);
 		}
 
-		this._audio.play();
+		try {
+			await this._audio.play();
+		} catch (error) {
+			if (error.name === "NotAllowedError") {
+				console.log("Audio play blocked - waiting for user interaction");
+				// Set up a one-time user interaction listener to start music
+				const startAudioOnInteraction = async () => {
+					try {
+						await this._audio.play();
+						console.log("Audio started after user interaction");
+					} catch (e) {
+						console.warn("Still could not play audio:", e);
+					}
+					document.removeEventListener("click", startAudioOnInteraction);
+					document.removeEventListener("touchstart", startAudioOnInteraction);
+				};
+				document.addEventListener("click", startAudioOnInteraction, {
+					once: true,
+				});
+				document.addEventListener("touchstart", startAudioOnInteraction, {
+					once: true,
+				});
+			} else {
+				console.warn("Audio play error:", error);
+				// Skip to next track if there's an error
+				setTimeout(() => this.next(), 1000);
+			}
+		}
+
 		this._audio.onended = () => {
 			this.next();
 		};

@@ -43,32 +43,10 @@ class PlayScreen extends PureComponent {
 		}
 	}
 
-	render() {
-		const { error } = this.state;
-		const {
-			book,
-			level,
-			isChapterSelectOpen,
-			setChapterSelectOpen,
-		} = this.props;
-
-		if (error) return <div className={styles.message}>❌ {error}</div>;
-
-		const chapter = this.currentChapter;
-		if (!book || !level || !chapter)
-			return <div className={styles.message}>⌛ {locales.get("loading")}</div>;
-
-		return (
-			<div className={styles.container}>
-				<ChapterSelectModal
-					open={isChapterSelectOpen}
-					setChapterSelectOpen={setChapterSelectOpen}
-				/>
-
-				<Toaster containerClassName="toaster-wrapper" />
-				<LevelScreen chapter={chapter} level={level} />
-			</div>
-		);
+	componentWillUnmount() {
+		// Cancel any pending async operations to prevent memory leaks
+		this._loadBookPromise?.cancel?.();
+		this._loadLevelPromise?.cancel?.();
 	}
 
 	get currentChapter() {
@@ -114,6 +92,39 @@ class PlayScreen extends PureComponent {
 			.then(setLevel)
 			.then(closeNonExistingFiles)
 			.catch(this._onError);
+	}
+
+	render() {
+		const { error } = this.state;
+		const { level, isChapterSelectOpen, setChapterSelectOpen } = this.props;
+
+		if (error) {
+			return (
+				<div className={styles.error}>
+					<h2>{locales.t("error_occured")}</h2>
+					<p>{error}</p>
+				</div>
+			);
+		}
+
+		if (!level) {
+			return (
+				<div className={styles.loading}>
+					<h2>{locales.t("loading")}</h2>
+				</div>
+			);
+		}
+
+		return (
+			<>
+				<LevelScreen />
+				<ChapterSelectModal
+					isOpen={isChapterSelectOpen}
+					onClose={() => setChapterSelectOpen(false)}
+				/>
+				<Toaster />
+			</>
+		);
 	}
 }
 

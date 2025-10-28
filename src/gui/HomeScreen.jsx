@@ -28,8 +28,8 @@ const LIGHT_Y = 50;
 const UI_MARGIN = 16;
 const SCALE_FACTOR = 0.5;
 const CRT_SPEED = 0.25;
-const MIN_WIDTH = 512;
-const MIN_HEIGHT = 256;
+const MIN_WIDTH = 320; // Reduced for mobile support
+const MIN_HEIGHT = 240; // Reduced for mobile support
 
 class HomeScreen extends PureComponent {
 	state = { fontsLoaded: false };
@@ -241,15 +241,23 @@ class HomeScreen extends PureComponent {
 
 				const ui = document.querySelector(UI_SELECTOR);
 				if (ui) {
-					ui.style.display =
-						app.renderer.width >= MIN_WIDTH && app.renderer.height >= MIN_HEIGHT
-							? "flex"
-							: "none";
+					// Always show UI on mobile, remove minimum size restriction
+					ui.style.display = "flex";
+
+					// Check if mobile device
+					const isMobile = window.innerWidth <= 767.98;
+					const isLandscape = window.innerWidth > window.innerHeight;
+
+					// Adjust scale factor for mobile
+					const mobileScaleFactor =
+						isMobile && !isLandscape ? 0.8 : SCALE_FACTOR;
+					const landscapeScaleFactor =
+						isMobile && isLandscape ? 0.6 : mobileScaleFactor;
 
 					const uiScale = Math.min(
-						(app.renderer.width / ui.clientWidth) * SCALE_FACTOR,
-						(app.renderer.height / ui.clientHeight) * SCALE_FACTOR,
-						1
+						(app.renderer.width / ui.clientWidth) * landscapeScaleFactor,
+						(app.renderer.height / ui.clientHeight) * landscapeScaleFactor,
+						isMobile ? landscapeScaleFactor : 1
 					);
 					ui.style.transform = `translate(-50%, 0) scale(${uiScale})`;
 					window.app = app;
@@ -299,12 +307,16 @@ class HomeScreen extends PureComponent {
 	};
 
 	_play = () => {
-		const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-		const isSafari = /^((?!chrome|chromium|android).)*safari/i.test(userAgent);
-		if (isSafari) {
-			alert(
-				"Sorry, Safari has known issues that break the game. Please use a Chromium-based browser or Firefox."
+		// Feature detection instead of browser blocking
+		const hasRequiredFeatures = this._checkBrowserCompatibility();
+
+		if (!hasRequiredFeatures) {
+			const shouldContinue = confirm(
+				"Your browser may have compatibility issues with some features. The game should still work, but for the best experience we recommend using a Chromium-based browser or Firefox. Continue anyway?"
 			);
+			if (!shouldContinue) {
+				return;
+			}
 		}
 
 		switch (this.props.gameMode) {
@@ -335,6 +347,39 @@ class HomeScreen extends PureComponent {
 	_quit = () => {
 		window.close();
 	};
+
+	_checkBrowserCompatibility() {
+		// Check for essential features rather than specific browsers
+		const features = {
+			webgl: (() => {
+				try {
+					const canvas = document.createElement("canvas");
+					return !!(
+						window.WebGLRenderingContext &&
+						(canvas.getContext("webgl") ||
+							canvas.getContext("experimental-webgl"))
+					);
+				} catch (e) {
+					return false;
+				}
+			})(),
+			webAudio: !!(window.AudioContext || window.webkitAudioContext),
+			webAssembly:
+				typeof WebAssembly === "object" &&
+				typeof WebAssembly.instantiate === "function",
+			es6Modules: (() => {
+				try {
+					new Function('import("")');
+					return true;
+				} catch (e) {
+					return false;
+				}
+			})(),
+		};
+
+		// Return true if all critical features are available
+		return features.webgl && features.webAssembly && features.es6Modules;
+	}
 
 	_canPlay() {
 		return true;

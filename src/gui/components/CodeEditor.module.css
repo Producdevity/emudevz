@@ -28,3 +28,26 @@
 		transform: rotate(360deg);
 	}
 }
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+	.container {
+		font-size: 16px; /* Prevents zoom on iOS */
+	}
+
+	.editor {
+		/* Larger touch targets for mobile */
+		font-size: 16px;
+		line-height: 1.5;
+	}
+
+	.debugger {
+		bottom: 16px;
+		right: 12px;
+	}
+
+	.spinner {
+		bottom: 16px;
+		right: 32px;
+	}
+}

@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
-import { Layer, Stage } from "@pixi/layers";
+// import { Layer, Stage } from "@pixi/layers"; // Commented out - incompatible with pixi.js v8
 import { CRTFilter } from "pixi-filters";
-import { PointLight, lightGroup } from "pixi-lights";
+// import { PointLight, lightGroup } from "pixi-lights"; // Commented out - incompatible with pixi.js v8
 import * as PIXI from "pixi.js";
 import { Toaster } from "react-hot-toast";
 import { connect } from "react-redux";
@@ -215,20 +215,20 @@ class HomeScreen extends PureComponent {
 			});
 			this._app = app;
 
-			app.stage = new Stage();
+			//	app.stage = new Stage(); // Commented out - incompatible with pixi.js v8
 			const crtFilter = this._createCRTFilter();
-			app.stage.filters = [crtFilter];
-			app.stage.filterArea = app.screen;
+			//		app.stage.filters = [crtFilter]; // Commented out - incompatible with pixi.js v8
+			//		app.stage.filterArea = app.screen; // Commented out - incompatible with pixi.js v8
 
 			const lightContainer = new PIXI.Container();
-			const light = new PointLight(LIGHT_COLOR, LIGHT_LUMINOSITY);
-			lightContainer.addChild(light);
+			//		const light = new PointLight(LIGHT_COLOR, LIGHT_LUMINOSITY); // Commented out - incompatible with pixi.js v8
+			//		lightContainer.addChild(light); // Commented out - incompatible with pixi.js v8
 
 			app.stage.addChild(
 				sprites.background,
 				sprites.logo,
-				new Layer(lightGroup),
-				lightContainer
+				//			new Layer(lightGroup), // Commented out - incompatible with pixi.js v8
+				lightContainer,
 			);
 
 			app.ticker.add(function (delta) {
@@ -257,7 +257,7 @@ class HomeScreen extends PureComponent {
 					const uiScale = Math.min(
 						(app.renderer.width / ui.clientWidth) * landscapeScaleFactor,
 						(app.renderer.height / ui.clientHeight) * landscapeScaleFactor,
-						isMobile ? landscapeScaleFactor : 1
+						isMobile ? landscapeScaleFactor : 1,
 					);
 					ui.style.transform = `translate(-50%, 0) scale(${uiScale})`;
 					window.app = app;
@@ -312,7 +312,7 @@ class HomeScreen extends PureComponent {
 
 		if (!hasRequiredFeatures) {
 			const shouldContinue = confirm(
-				"Your browser may have compatibility issues with some features. The game should still work, but for the best experience we recommend using a Chromium-based browser or Firefox. Continue anyway?"
+				"Your browser may have compatibility issues with some features. The game should still work, but for the best experience we recommend using a Chromium-based browser or Firefox. Continue anyway?",
 			);
 			if (!shouldContinue) {
 				return;

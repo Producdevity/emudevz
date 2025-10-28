@@ -1,4 +1,4 @@
-import chai from "chai";
+import * as chai from "chai";
 import _ from "lodash";
 
 function isClass(v) {
@@ -13,7 +13,7 @@ chai.Assertion.addProperty("class", function () {
 		"expected #{this} to be a class",
 		"expected #{this} to not be a class",
 		"class", // expected
-		typeof obj // actual
+		typeof obj, // actual
 	);
 });
 
@@ -23,7 +23,7 @@ chai.Assertion.addChainableMethod("equalN", function (expected, name) {
 	this.assert(
 		actual === expected,
 		`expected ${name} to equal ${expected}, but got ${actual}`,
-		`expected ${name} not to equal ${expected}`
+		`expected ${name} not to equal ${expected}`,
 	);
 });
 
@@ -34,7 +34,7 @@ chai.Assertion.addChainableMethod("equalHex", function (expected, name) {
 	this.assert(
 		actual === expected,
 		`expected ${name} to equal ${toHex(expected)}, but got ${toHex(actual)}`,
-		`expected ${name} not to equal ${toHex(expected)}`
+		`expected ${name} not to equal ${toHex(expected)}`,
 	);
 });
 
@@ -46,7 +46,7 @@ chai.Assertion.addChainableMethod("equalBin", function (expected, name) {
 	this.assert(
 		actual === expected,
 		`expected ${name} to equal ${toBin(expected)}, but got ${toBin(actual)}`,
-		`expected ${name} not to equal ${toBin(expected)}`
+		`expected ${name} not to equal ${toBin(expected)}`,
 	);
 });
 

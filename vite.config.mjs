@@ -34,7 +34,7 @@ export default defineConfig(({ mode }) => {
 					manualChunks: {
 						// Split vendor chunks for better caching
 						react: ["react", "react-dom"],
-						pixi: ["pixi.js", "@pixi/layers", "pixi-filters", "pixi-lights"],
+						pixi: ["pixi.js", "pixi-filters"], // Removed @pixi/layers and pixi-lights (incompatible with pixi.js v8)
 						terminal: ["xterm", "xterm-addon-fit"],
 						utils: ["lodash", "classnames"],
 					},
@@ -57,7 +57,7 @@ export default defineConfig(({ mode }) => {
 function setEnv(mode) {
 	Object.assign(
 		process.env,
-		loadEnv(mode, ".", ["REACT_APP_", "NODE_ENV", "PUBLIC_URL"])
+		loadEnv(mode, ".", ["REACT_APP_", "NODE_ENV", "PUBLIC_URL"]),
 	);
 	process.env.NODE_ENV ||= mode;
 	const { homepage } = JSON.parse(readFileSync("package.json", "utf-8"));
@@ -66,7 +66,7 @@ function setEnv(mode) {
 				homepage.startsWith("http") || homepage.startsWith("/")
 					? homepage
 					: `/${homepage}`
-		  }`.replace(/\/$/, "")
+			}`.replace(/\/$/, "")
 		: "";
 }
 // Expose `process.env` environment variables to your client code
@@ -82,7 +82,7 @@ function envPlugin() {
 					Object.entries(env).map(([key, value]) => [
 						`process.env.${key}`,
 						JSON.stringify(value),
-					])
+					]),
 				),
 			};
 		},
@@ -100,7 +100,7 @@ function devServerPlugin() {
 			const { HOST, PORT, HTTPS, SSL_CRT_FILE, SSL_KEY_FILE } = loadEnv(
 				mode,
 				".",
-				["HOST", "PORT", "HTTPS", "SSL_CRT_FILE", "SSL_KEY_FILE"]
+				["HOST", "PORT", "HTTPS", "SSL_CRT_FILE", "SSL_KEY_FILE"],
 			);
 			const https = HTTPS === "true";
 			return {

@@ -3,6 +3,7 @@ import React, { PureComponent } from "react";
 import { CRTFilter } from "pixi-filters";
 // import { PointLight, lightGroup } from "pixi-lights"; // Commented out - incompatible with pixi.js v8
 import * as PIXI from "pixi.js";
+import { Assets } from "pixi.js";
 import { Toaster } from "react-hot-toast";
 import { connect } from "react-redux";
 import Book from "../level/Book";
@@ -179,33 +180,33 @@ class HomeScreen extends PureComponent {
 		}
 	}
 
-	onReady = (div) => {
+	onReady = async (div) => {
 		if (!div) return;
 
-		const loader = new PIXI.Loader();
-		loader.reset();
-		loader.add("logo", ASSET_LOGO);
-		loader.add("background", ASSET_BACKGROUND);
-
+		// PIXI v8 uses Assets instead of Loader
 		const sprites = {};
 		let logoHeight = 0;
-		loader.load((loader, resources) => {
-			sprites.logo = new PIXI.Sprite(resources.logo.texture);
-			sprites.background = new PIXI.TilingSprite(resources.background.texture);
-			logoHeight = resources.logo.texture.height;
-		});
-
 		let error = false;
-		loader.onError.add(() => {
+
+		try {
+			// Load assets using new PIXI v8 Assets API
+			const logoTexture = await Assets.load(ASSET_LOGO);
+			const backgroundTexture = await Assets.load(ASSET_BACKGROUND);
+
+			sprites.logo = new PIXI.Sprite(logoTexture);
+			sprites.background = new PIXI.TilingSprite(backgroundTexture);
+			logoHeight = logoTexture.height;
+		} catch (err) {
 			error = true;
-		});
+		}
 
-		loader.onComplete.add(() => {
-			if (error) {
-				alert("Error loading assets.");
-				return;
-			}
+		// After loading assets
+		if (error) {
+			alert("Error loading assets.");
+			return;
+		}
 
+		try {
 			sprites.background.tilePosition.y = BACKGROUND_TILE_Y;
 			sprites.background.alpha = BACKGROUND_ALPHA;
 
@@ -267,8 +268,8 @@ class HomeScreen extends PureComponent {
 					sprites.logo.position.y =
 						app.renderer.height / 2 -
 						(sprites.logo.height + ui.clientHeight * uiScale) / 2;
-					light.x = sprites.logo.x + LIGHT_X * logoScale;
-					light.y = sprites.logo.y + LIGHT_Y * logoScale;
+					//	light.x = sprites.logo.x + LIGHT_X * logoScale; // Commented out - incompatible with pixi.js v8
+					//	light.y = sprites.logo.y + LIGHT_Y * logoScale; // Commented out - incompatible with pixi.js v8
 
 					ui.style.top = `${
 						sprites.logo.position.y + sprites.logo.height + UI_MARGIN
@@ -280,7 +281,9 @@ class HomeScreen extends PureComponent {
 			});
 
 			div.appendChild(app.view);
-		});
+		} catch (err) {
+			console.error("Error initializing PIXI app:", err);
+		}
 	};
 
 	_createCRTFilter() {
